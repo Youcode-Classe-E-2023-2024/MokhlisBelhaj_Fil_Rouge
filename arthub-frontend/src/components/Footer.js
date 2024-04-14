@@ -1,78 +1,29 @@
-<x-head>
-</x-head>
-<body>
-    <x-nav :login=true></x-nav>
-    <x-landing></x-landing>
-    <x-slider-artists></x-slider-artists>
-
-
-
-  
-    <h1 class="hero__heading">
-        Explore Article
-    </h1>
-    {{-- filtre --}}
-
-   <x-article-filtre></x-article-filtre>
-
-    {{-- here --}}
-
-    <div class="container mx-auto w-full my-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            @for ($i = 0; $i < 8; $i++)
-                <div class="bg-white rounded-lg shadow-md">
-                    <div class="relative">
-                        <!-- Image Video -->
-                        <a href="#">
-                            <img src="https://picsum.photos/seed/59/300/200" class="w-full h-auto rounded-t-lg" />
-                        </a>
-                    </div>
-
-                    <div class="p-4">
-                        <div class="flex items-center gap-2">
-                            <!-- Profile Picture -->
-                            <a href="#">
-                                <img src="https://picsum.photos/seed/1/40/40" class="rounded-full w-10 h-10" />
-                            </a>
-
-                            <!-- Description -->
-                            <div class="flex flex-col">
-                                <a href="#" class="text-blue-600 font-semibold">Learn CSS Box Model in 8
-                                    Minutes</a>
-                                <a href="#" class="text-gray-600 text-sm hover:text-gray-800">Web Dev
-                                    Simplified</a>
-                                <p class="text-gray-600 text-sm">241K views</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endfor
-        </div>
-    </div>
-  
-    <section class="bg-white">
+import React from "react";
+import { Link } from "react-router-dom";
+const Footer = ()=>{
+return(
+    <section class="bg-gray-200">
         <div class="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
             <nav class="flex flex-wrap justify-center -mx-5 -my-2">
                 <div class="px-5 py-2">
-                    <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
-                        ArtHub"
-                    </a>
+                <Link to="/" class="text-base leading-6 text-gray-500 hover:text-gray-900">
+                        ArtHub
+                   
+               
+
+                    </Link>
                 </div>
                 <div class="px-5 py-2">
-                    <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
+                <Link to="/artists" class="text-base leading-6 text-gray-500 hover:text-gray-900">
                         Artists
-                    </a>
+                   </Link>
                 </div>
                 <div class="px-5 py-2">
-                    <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
+                <Link to="/article"  class="text-base leading-6 text-gray-500 hover:text-gray-900">
                         Article
-                    </a>
+                   </Link>
                 </div>
-                <div class="px-5 py-2">
-                    <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
-                        Contact
-                    </a>
-                </div>
+                
             </nav>
             <div class="flex justify-center mt-8 space-x-6">
                 <a href="#" class="text-gray-400 hover:text-gray-500">
@@ -101,21 +52,10 @@
                 </a>
             </div>
             <p class="mt-8 text-base leading-6 text-center text-gray-400">
-                © 2021 SomeCompany, Inc. All rights reserved.
+                © 2024 ArtHub, Inc. All rights reserved.
             </p>
         </div>
     </section>
-   
-
-</body>
-<script>
-    const btn = document.querySelector("button.mobile-menu-button");
-    const menu = document.querySelector(".mobile-menu");
-
-    // add event listeners
-    btn.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
-    });
-</script>
-
-</html>
+);
+};
+export default Footer;

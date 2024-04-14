@@ -1,0 +1,23 @@
+
+.carousel-items {
+    display: flex;
+    animation: scroll 20s linear infinite;
+  }
+  
+  @keyframes scroll {
+    0% {
+        transform: translateX(100%); 
+      }
+      100% {
+        transform: translateX(-100%); 
+      }
+  }
+
+.carousel-items:hover {
+    animation-play-state: paused !important;
+}
+
+.carousel-focus:hover {
+    transition: all 0.8s;
+    transform: scale(1.1);
+}
