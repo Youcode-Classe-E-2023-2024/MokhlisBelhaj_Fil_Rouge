@@ -11,19 +11,23 @@ import Artists from './Pages/Artists';
 import Footer from './components/Footer';
 import Profile from './Pages/ProfilePage';
 import MyProfil  from './Pages/MyProfil';
+import CloudTest from './Pages/cloudTest';
+import Dashboard from './Pages/Dashboard';
 
 const App = () => {
   return (
     <div className='bg-blue-100'>
       <NavBar />
-      <Routes>
+      <é>
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Article" element={<Article />} />
         <Route path="/Artists" element={<Artists />} />
-        <Route path= "/Profile" element={<Profile />} />
-        <Route path="/Myprofile" element={<MyProfil />} />   
+        <Route path= "/Profile/id" element={<Profile />} />
+        <Route path="/Myprofile" element={<MyProfil />} />  
+        <Route path="/CloudTest" element={<CloudTest />} />  
+        <Route path="/Dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />
     </div>

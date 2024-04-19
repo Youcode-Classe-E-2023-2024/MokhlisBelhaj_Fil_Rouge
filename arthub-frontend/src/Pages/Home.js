@@ -8,22 +8,20 @@ import { Link } from 'react-router-dom';
 
 
 
-const Home = () => {
+export default function Home ()  {
   return (
     <div>
         <Carousel/>
         <ArtistsSlide/>
-        <h1 class="hero__heading">
+        <h1 className="hero__heading">
         Explore Article
     </h1>
     <ArticleSection />
-    <div class="flex justify-center">
-    <Link to="/article" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-  Button
-</Link>
+    <div className="flex justify-center">
+    <Link to="/article" className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+more</Link>
     </div>
     </div>
   );
 };
 
-export default Home;

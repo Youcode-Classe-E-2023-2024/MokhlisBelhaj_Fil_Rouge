@@ -6,7 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
+
 
 class User extends Authenticatable
 {
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'imageUrl',
     ];
 
     /**
@@ -41,4 +43,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function roles() {
+        return $this->belongsToMany(Role::class,'role_user');
+    }
+           // Méthode pour assigner une permission à un rôle
+       public function giveRolesTo($role) {
+        if (is_int($role)) {
+            $role = Role::findOrFail($role);
+        } 
+        elseif (is_string($role)) {
+            $role = Role::where('name', $role)->first();
+        }
+            $this->roles()->attach($role);
+    }
+    public function hasRole($role) {
+        return $this->roles()->where('id', $role->id)->exists();
+    }
+    public function removeRoleFrom($role) {
+        $this->roles()->detach($role);
+    }
+   
+
+    
 }

@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import useApiAxios from '../config/axios';
+import UserContext from '../auth/user-context';
+
+
+
 
 const Login = () => {
+  //CurrentUser
+  const [currentUser, setCurrentUser] = useContext(UserContext);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -12,18 +20,18 @@ const Login = () => {
         event.preventDefault();
         
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/login', {
+            const response = await useApiAxios.post('/login', {
                 email: email,
                 password: password
             });
 
             // Assuming the token is returned in the response data
             const token = response.data.data.token;
-            const name = response.data.data.user.name;
+            const user = response.data.data.user;
 
             // Store the token in local storage or session storage
             localStorage.setItem('token', token);
-            localStorage.setItem('user',name);
+            setCurrentUser(user);
             console.log(token);
 
             // Redirect the user to another page, e.g., dashboard

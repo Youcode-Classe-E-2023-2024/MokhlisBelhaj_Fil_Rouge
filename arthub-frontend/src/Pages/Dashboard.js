@@ -1,0 +1,51 @@
+import React, { Profiler, useState } from 'react';
+import Sidebaredash from '../components/sidebaredash';
+import Statistique from '../components/Statistique';
+import Users from '../components/users';
+import Articledash from '../components/Articledash';
+import Role from '../components/Role';
+import Permissions from '../components/Permissions';
+
+function Dashboard() {
+    const [selectedComponent, setSelectedComponent] = useState('profile');
+
+    const handleComponentChange = (component) => {
+      setSelectedComponent(component);
+    };
+  
+    let contentComponent;
+    switch (selectedComponent) {
+      case 'statistique':
+        contentComponent = <Statistique />;
+        break;
+      case 'users':
+        contentComponent = <Users />;
+        break;
+      case 'article':
+        contentComponent = <Articledash />;
+        break;
+      case 'role':
+        contentComponent = <Role />;
+        break;
+      case 'permissions':
+        contentComponent = <Permissions />;
+        break;
+      default:
+        contentComponent = <Statistique />;
+    }
+  return (
+   
+       <div className='min-h-screen h-fit '>
+       <div className="flex  ">
+         <div className="w-  fixed overflow-y-auto bg-gray-50 border-r border-gray-200">
+           <Sidebaredash handleComponentChange={handleComponentChange} />
+         </div>
+         <div className="w-3/4 ml-64 pl-4 ">
+           {contentComponent}
+         </div>
+       </div>
+     </div>
+    )
+}
+
+export default Dashboard

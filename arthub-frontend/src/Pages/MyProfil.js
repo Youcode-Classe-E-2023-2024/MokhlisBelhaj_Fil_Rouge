@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import ProfilePage from './ProfilePage';
+import Profile from '../components/profile';
 import Subscribe from '../components/Subscribe';
 import Communication from '../components/Communication';
 import SideNav from '../components/SideNav';
+import Uplode from '../components/uplode';
 
 const MyProfile = () => {
-  const [selectedComponent, setSelectedComponent] = useState('profile'); // Default component to display
+  const [selectedComponent, setSelectedComponent] = useState('profile');
 
-  // Function to handle component selection
   const handleComponentChange = (component) => {
     setSelectedComponent(component);
   };
@@ -16,7 +15,7 @@ const MyProfile = () => {
   let contentComponent;
   switch (selectedComponent) {
     case 'profile':
-      contentComponent = <ProfilePage />;
+      contentComponent = <Profile />;
       break;
     case 'subscribe':
       contentComponent = <Subscribe />;
@@ -24,20 +23,23 @@ const MyProfile = () => {
     case 'communication':
       contentComponent = <Communication />;
       break;
+    case 'uplode':
+      contentComponent = <Uplode/>;
+      break;
     default:
-      contentComponent = <ProfilePage />;
+      contentComponent = <Profile />;
   }
 
   return (
-    <div className=' relative'>
-    <div className="flex  ">
-      <div className="w-  fixed overflow-y-auto bg-gray-50 border-r border-gray-200">
-        <SideNav handleComponentChange={handleComponentChange} />
+    <div className=' h-full '>
+      <div className="flex  ">
+        <div className="w-  fixed overflow-y-auto bg-gray-50 border-r border-gray-200">
+          <SideNav handleComponentChange={handleComponentChange} />
+        </div>
+        <div className="w-3/4 ml-64 pl-4 ">
+          {contentComponent}
+        </div>
       </div>
-      <div className="w-3/4 ml-64 pl-4 "> {/* Adjust the padding according to your sidebar width */}
-        {contentComponent}
-      </div>
-    </div>
     </div>
   );
 };

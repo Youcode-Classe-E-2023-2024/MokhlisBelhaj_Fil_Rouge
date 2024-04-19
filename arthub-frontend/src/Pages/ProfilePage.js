@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ArticleSection from '../components/ArticleSection';
+import UserContext from '../auth/user-context';
 
-const ProfilePage = () => {
+const Profile = () => {
+    const [currentUser, setCurrentUser] = useContext(UserContext);
+
     return (
         <div className="p-16">
             <div className="p-8 bg-white shadow mt-24">
@@ -30,7 +33,7 @@ const ProfilePage = () => {
                     </div>
                 </div>
                 <div className="mt-20 text-center border-b pb-12">
-                    <h1 className="text-4xl font-medium text-gray-700">Jessica Jones, <span className="font-light text-gray-500">27</span></h1>
+                    <h1 className="text-4xl font-medium text-gray-700">{currentUser?.name || ''} <span className="font-light text-gray-500">{currentUser?.role || ''}</span></h1>
                     <p className="font-light text-gray-600 mt-3">Bucharest, Romania</p>
                     <p className="mt-8 text-gray-500">Solution Manager - Creative Tim Officer</p>
                     <p className="mt-2 text-gray-500">University of Computer Science</p>
@@ -44,4 +47,4 @@ const ProfilePage = () => {
     );
 };
 
-export default ProfilePage;
+export default Profile;
