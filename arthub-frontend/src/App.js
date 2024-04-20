@@ -18,7 +18,7 @@ const App = () => {
   return (
     <div className='bg-blue-100'>
       <NavBar />
-      <é>
+      <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
