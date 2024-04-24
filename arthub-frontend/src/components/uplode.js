@@ -2,7 +2,7 @@ import React from 'react'
 
 function uplode() {
   return (
-    <div>uplode</div>
+    <div>update</div>
   )
 }
 

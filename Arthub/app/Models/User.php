@@ -64,6 +64,15 @@ class User extends Authenticatable
     public function removeRoleFrom($role) {
         $this->roles()->detach($role);
     }
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'follower_id', 'followed_id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_follows', 'followed_id', 'follower_id');
+    }
    
 
     

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import useApiAxios from '../config/axios';
+import useApiAxios from '../../config/axios';
 import RolePopup from './RolePopup';
 import GestionRole from './GestionRole';
 import AddRole from './AddRole';
@@ -60,7 +60,7 @@ function Role() {
     const columns = [
         {
             name: 'ID',
-            selector: row => row.id,
+            selector: row =>Number(row.id),
             sortable: true,
         },
         {
@@ -109,7 +109,7 @@ function Role() {
             />
 
             {showGestionRole && <GestionRole RoleId={selectedRoleId} onClose={handleGestionRoleClose} />}
-            {ShowAddRole && <AddRole RoleId={selectedRoleId} onClose={handleAddRoleClose} />}
+            {ShowAddRole && <AddRole onClose={handleAddRoleClose} />}
 
         </div>
     );

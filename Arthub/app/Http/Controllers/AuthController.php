@@ -183,7 +183,7 @@ class AuthController extends Controller
             'email_verified_at' => $user->email_verified_at,
             'created_at' => $user->created_at,
             'updated_at' => $user->updated_at,
-            'roles' => $user->roles->pluck('name')->implode(', ')
+            'role' => $user->roles->pluck('name')->implode(', ')
         ];
 
 

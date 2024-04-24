@@ -1,152 +1,80 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
+import useApiAxios from '../config/axios';
+import { useNavigate } from 'react-router-dom';
 
 // Define the retireFollower function outside of the component
 const retireFollower = (followerId) => {
     console.log(followerId);
 };
 
-const columns = [
-    {
-        name: 'ID',
-        selector: row => row.id,
-        sortable: true,
-    },
-    {
-        name: 'Name',
-        selector: row => row.name,
-        sortable: true,
-    },
-    {
-        name: 'Retire',
-        // button: true,
-        cell: row => (
-            <button onClick={()=> retireFollower(row.id)}  className='text-red-500'>Retire</button>
-        ),
-    },
-];
 
-const data = [
-    {
-        id: 1,
-        name: 'John Doe'
-    },
-    {
-        id: 2,
-        name: 'Jane Smith'
-    },
-    {
-        id: 3,
-        name: 'Michael Johnson'
-    },
-    {
-        id: 4,
-        name: 'Emily Brown'
-    },
-    {
-        id: 5,
-        name: 'David Wilson'
-    },
-    {
-        id: 6,
-        name: 'Sarah Miller'
-    },
-    {
-        id: 7,
-        name: 'Christopher Davis'
-    },
-    {
-        id: 8,
-        name: 'Jessica Martinez'
-    },
-    {
-        id: 9,
-        name: 'Daniel Taylor'
-    },
-    {
-        id: 10,
-        name: 'Lauren Anderson'
-    },
-    {
-        id: 11,
-        name: 'John Doe'
-    },
-    {
-        id: 12,
-        name: 'Jane Smith'
-    },
-    {
-        id: 13,
-        name: 'Michael Johnson'
-    },
-    {
-        id: 14,
-        name: 'Emily Brown'
-    },
-    {
-        id: 15,
-        name: 'David Wilson'
-    },
-    {
-        id: 16,
-        name: 'Sarah Miller'
-    },
-    {
-        id: 17,
-        name: 'Christopher Davis'
-    },
-    {
-        id: 18,
-        name: 'Jessica Martinez'
-    },
-    {
-        id: 19,
-        name: 'Daniel Taylor'
-    },
-    {
-        id: 20,
-        name: 'Lauren Anderson'
-    },
-    {
-        id: 21,
-        name: 'John Doe'
-    },
-    {
-        id: 22,
-        name: 'Jane Smith'
-    },
-    {
-        id: 23,
-        name: 'Michael Johnson'
-    },
-    {
-        id: 24,
-        name: 'Emily Brown'
-    },
-    {
-        id: 25,
-        name: 'David Wilson'
-    },
-    {
-        id: 26,
-        name: 'Sarah Miller'
-    },
-    {
-        id: 27,
-        name: 'Christopher Davis'
-    },
-    {
-        id: 28,
-        name: 'Jessica Martinez'
-    },
-    {
-        id: 29,
-        name: 'Daniel Taylor'
-    },
-]
+
+
 export default function Follower() {
+    const [userData, setUserData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const filteredData = data.filter((item) =>
+    const Navigate = useNavigate();
+    const columns = [
+       
+        {
+            name: 'Name',
+            selector: (row) => row.name,
+            sortable: true,
+        },
+        {
+            name: 'Email',
+            selector: (row) => row.email,
+        },
+        {
+            name: 'Image',
+            cell: (row) => (
+                <img
+                    src={row.imageUrl}
+                    alt={row.name}
+                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                />
+            ),
+        },
+        {
+            name: 'Retirer',
+            cell: (row) => (
+                <button
+                    onClick={() => handleUnfollow(row.id)}
+                    className='text-red-500'
+                >
+                    Retirer
+                </button>
+            ),
+        },
+    ];
+    useEffect(() => {
+       
+
+        fetchData(); // Fetch data when the component is mounted
+    }, []);
+    const fetchData = async () => {
+        try {
+            const response = await useApiAxios.get('/followers'); // Use correct API endpoint
+            setUserData(response.data.followers); // Set state with the 'following' array
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    const handleUnfollow = (followerId) => {
+        useApiAxios.post(`/users/${followerId}/unfollower`)
+        .then(() => {
+            fetchData()
+        })
+        .catch((error) => {
+          console.error('Error updating following status:', error);
+        });
+       
+    };
+    const handleRowClick = (row) => {
+        Navigate(`/Profile/${row.id}`); 
+       };
+    const filteredData = userData.filter((item) =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -169,6 +97,7 @@ export default function Follower() {
                 pagination
                 highlightOnHover
                 striped
+                onRowClicked={handleRowClick}
             />
         </div>
     );

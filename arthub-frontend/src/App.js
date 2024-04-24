@@ -9,7 +9,7 @@ import NavBar from './components/NavBar';
 import Article from './Pages/Article';  
 import Artists from './Pages/Artists';
 import Footer from './components/Footer';
-import Profile from './Pages/ProfilePage';
+import Profile from './components/ProfilePage';
 import MyProfil  from './Pages/MyProfil';
 import CloudTest from './Pages/cloudTest';
 import Dashboard from './Pages/Dashboard';
@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/Register" element={<Register />} />
         <Route path="/Article" element={<Article />} />
         <Route path="/Artists" element={<Artists />} />
-        <Route path= "/Profile/id" element={<Profile />} />
+        <Route path= "/Profile/:id" element={<Profile />} />
         <Route path="/Myprofile" element={<MyProfil />} />  
         <Route path="/CloudTest" element={<CloudTest />} />  
         <Route path="/Dashboard" element={<Dashboard />} />

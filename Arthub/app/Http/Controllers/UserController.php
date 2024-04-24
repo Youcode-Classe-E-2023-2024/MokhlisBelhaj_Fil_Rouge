@@ -77,20 +77,20 @@ class UserController extends Controller
      * )
      */
 
-     public function index()
-     {
-         $usersWithRoles = User::with('roles:name')->get()->map(function ($user) {
-             $roles = $user->roles->pluck('name')->toArray();
-             $userArray = $user->toArray();
-             $userArray['roles'] = $roles;
-             return $userArray;
-         });
-     
-         return response()->json($usersWithRoles);
-     }
-     
+    public function index()
+    {
+        $usersWithRoles = User::with('roles:name')->get()->map(function ($user) {
+            $roles = $user->roles->pluck('name')->toArray();
+            $userArray = $user->toArray();
+            $userArray['roles'] = $roles;
+            return $userArray;
+        });
 
-     
+        return response()->json($usersWithRoles);
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -149,14 +149,6 @@ class UserController extends Controller
             ], 403);
         }
 
-        if ($validate->fails()) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'Validation Error!',
-                'data' => $validate->errors(),
-            ], 403);
-        }
-
 
         $user = User::create([
             'name' => $request->name,
@@ -203,16 +195,16 @@ class UserController extends Controller
      */
 
     public function show($id)
-    { 
-        
-       
+    {
+
+
         // $user = User::findOrFail($id);
         // // $role = $user->roles;
         // $data=[
         //     "user" => $user,
         //     // "role" => $role
         // ];
-        
+
         // return response()->json($data);
         $user = User::findOrFail($id);
         $userWithRoles = $user->load('roles:name');
@@ -220,8 +212,7 @@ class UserController extends Controller
         $roles = $userWithRoles->roles->toArray();
         $userArray['roles'] = $roles;
 
-        return response()->json($userArray);       
-
+        return response()->json($userArray);
     }
 
     /**
@@ -407,7 +398,7 @@ class UserController extends Controller
             // Assign permission to role
             if (!$user->hasRole($role)) {
                 $user->giveRolesTo($role);
-                
+
                 return response()->json(['message' => 'Role assigned to user successfully!']);
             } else {
                 return response()->json(['message' => ' user has this Role ']);
@@ -529,13 +520,58 @@ class UserController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
     public function acteur()
     {
-        $users = User::all();
-        return response()->json($users);
+        $acteurs = User::whereHas('roles', function ($query) {
+            $query->where('name', 'acteur');
+        })->get();
+
+        return response()->json($acteurs);
     }
 
-    public function test($id){
+    public function follow($userToFollow)
+    {
+        auth()->user()->following()->attach($userToFollow);
+        return response()->json(['message' => 'You are now following ']);
+    }
+
+    public function unfollow($userToUnfollow)
+    {
+        auth()->user()->following()->detach($userToUnfollow);
+        return response()->json(['message' => 'You have unfollowed ']);
+    }
+    public function unfollower($userToUnfollow)
+    {
+        auth()->user()->followers()->detach($userToUnfollow);
+        return response()->json(['message' => 'You have unfollowed ']);
+    }
+
+    public function GetFollowers(Request $request)
+    {
+        $user = auth()->user();
+        $followers = $user->followers()->get();
+
+        return response()->json(['followers' => $followers]);
+    }
+    public function GetFollowing(Request $request)
+    {
+        $user = auth()->user();
+        $following = $user->following()->get();
+        return response()->json(['following' => $following]);
+    }
+    public function isFollowing($userId)
+    {
+        $user = auth()->user();
+
+
+        $isFollowing = $user->following()->where('followed_id', $userId)->exists();
+
+        return response()->json([$isFollowing]);
+    }
+
+    public function test($id)
+    {
         $user = user::findOrFail($id);
         $user->roles;
         dd($user->roles);

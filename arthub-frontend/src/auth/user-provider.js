@@ -8,6 +8,7 @@ const UserProvider = ({ children }) => {
     console.log("loaded");
     refreshUserQuery(setCurrentUser);
   }, [setCurrentUser]);
+  
   return (
     <>
       <UserContext.Provider value={[currentUser, setCurrentUser]}>

@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -21,7 +22,9 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => Hash::make('password'), // Use Hash::make() to hash the password
+            'imageUrl' =>'https://static.vecteezy.com/ti/vecteur-libre/p3/9374350-acteur-ou-presentateur-de-tv-icone-lineaire-illustration-de-la-ligne-mince-symbole-de-contour-de-star-de-film-vecteur-dessin-de-contour-isole-vectoriel.jpg',
+
             'remember_token' => Str::random(10),
         ];
     }

@@ -1,10 +1,11 @@
 import React, { Profiler, useState } from 'react';
-import Sidebaredash from '../components/sidebaredash';
+import Sidebaredash from '../components/admin/sidebaredash';
 import Statistique from '../components/Statistique';
 import Users from '../components/users';
 import Articledash from '../components/Articledash';
-import Role from '../components/Role';
-import Permissions from '../components/Permissions';
+import Role from '../components/admin/Role';
+import Permissions from '../components/admin/Permissions';
+import Categorie from '../components/admin/Categorie';
 
 function Dashboard() {
     const [selectedComponent, setSelectedComponent] = useState('profile');
@@ -23,6 +24,9 @@ function Dashboard() {
         break;
       case 'article':
         contentComponent = <Articledash />;
+        break;
+      case 'categorie':
+        contentComponent = <Categorie />;
         break;
       case 'role':
         contentComponent = <Role />;

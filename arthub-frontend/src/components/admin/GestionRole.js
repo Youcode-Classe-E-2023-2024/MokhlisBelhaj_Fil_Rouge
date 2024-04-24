@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import useApiAxios from '../config/axios';
+import useApiAxios from '../../config/axios';
 
 const GestionRole = ({ RoleId, onClose }) => {
-    console.log(RoleId);
     const [roleData, setRoleData] = useState(null);
     const [allPermissions, setAllPermissions] = useState([]);
+    const [rolePermissions, setRolePermissions] = useState([]);
     const [selectedPermission, setSelectedPermission] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const roleResponse = await useApiAxios.get(`/roles/${RoleId}`);
+                const [roleResponse, rolePermissionsResponse, permissionsResponse] = await Promise.all([
+                    useApiAxios.get(`/roles/${RoleId}`),
+                    useApiAxios.get(`/roles/${RoleId}/permissions`),
+                    useApiAxios.get(`/permissions`)
+                ]);
                 setRoleData(roleResponse.data);
-
-                const permissionsResponse = await useApiAxios.get(`/roles/${RoleId}/permissions`);
+                setRolePermissions(rolePermissionsResponse.data);
                 setAllPermissions(permissionsResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -23,15 +26,14 @@ const GestionRole = ({ RoleId, onClose }) => {
         fetchData();
 
         return () => {
-            // Cleanup function
+            // Cleanup function if needed
         };
     }, [RoleId]);
 
     const removePermission = async (permissionId) => {
         try {
             await useApiAxios.delete(`/roles/${RoleId}/permissions/${permissionId}`);
-            const response = await useApiAxios.get(`/roles/${RoleId}/permissions`);
-            setAllPermissions(response.data);
+            setRolePermissions(rolePermissions.filter(permission => permission.id !== permissionId));
         } catch (error) {
             console.error('Error removing permission:', error);
         }
@@ -40,8 +42,8 @@ const GestionRole = ({ RoleId, onClose }) => {
     const addPermissionToRole = async () => {
         try {
             await useApiAxios.post(`/roles/${RoleId}/permissions/${selectedPermission}`);
-            const response = await useApiAxios.get(`/roles/${RoleId}/permissions`);
-            setAllPermissions(response.data);
+            const updatedPermissions = await useApiAxios.get(`/roles/${RoleId}/permissions`);
+            setRolePermissions(updatedPermissions.data);
             setSelectedPermission('');
         } catch (error) {
             console.error('Error adding permission:', error);
@@ -55,10 +57,9 @@ const GestionRole = ({ RoleId, onClose }) => {
                 {roleData && (
                     <div>
                         <p className="mb-2"><strong>Role Name:</strong> {roleData.name}</p>
-                        <p className="mb-2"><strong>Description:</strong> {roleData.description}</p>
                         <p className="mb-2"><strong>Permissions:</strong></p>
                         <ul className="mb-4">
-                            {allPermissions.map((permission) => (
+                            {rolePermissions.map((permission) => (
                                 <li key={permission.id} className="flex items-center justify-between mb-2">
                                     <span>{permission.name}</span>
                                     <button onClick={() => removePermission(permission.id)} className="bg-red-500 text-white px-2 py-1 rounded-md">Remove</button>

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import UserContext from '../auth/user-context';
+import UserContext from '../../auth/user-context';
 
 function SidebarDash({ handleComponentChange }) {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -37,6 +37,12 @@ function SidebarDash({ handleComponentChange }) {
             {/* Your SVG path */}
           </svg>
           Permissions
+        </button>
+        <button onClick={() => handleComponentChange('categorie')} className="flex items-center px-6 py-2.5 text-gray-500 hover:text-orange-600 group">
+          <svg className="h-5 w-5 text-gray-400 mr-2 group-hover:text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            {/* Your SVG path */}
+          </svg>
+          Categories
         </button>
         <button onClick={() => handleComponentChange('article')} className="flex items-center px-6 py-2.5 text-gray-500 hover:text-orange-600 group">
           <svg className="h-5 w-5 text-gray-400 mr-2 group-hover:text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">

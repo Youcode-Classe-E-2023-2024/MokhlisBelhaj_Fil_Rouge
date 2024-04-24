@@ -32,7 +32,7 @@ const Login = () => {
             // Store the token in local storage or session storage
             localStorage.setItem('token', token);
             setCurrentUser(user);
-            console.log(token);
+            console.log(currentUser);
 
             // Redirect the user to another page, e.g., dashboard
             Navigate('/');

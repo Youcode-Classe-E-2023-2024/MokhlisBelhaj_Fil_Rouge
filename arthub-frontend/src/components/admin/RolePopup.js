@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useApiAxios from '../config/axios';
+import useApiAxios from '../../config/axios';
 
 const RolePopup = ({ userId, onClose }) => {
     const [userData, setUserData] = useState(null);

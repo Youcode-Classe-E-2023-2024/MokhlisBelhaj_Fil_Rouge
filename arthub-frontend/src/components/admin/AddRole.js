@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useApiAxios from '../config/axios';
+import useApiAxios from '../../config/axios';
 
 function AddRole({ onClose }) {
     const [roleName, setRoleName] = useState('');
@@ -20,6 +20,7 @@ function AddRole({ onClose }) {
                 })
                 .catch(error => {
                     console.error('Error adding role:', error);
+                    alert('not valide', error.error)
                 });
         }
     };
@@ -37,7 +38,7 @@ function AddRole({ onClose }) {
                                 value={roleName}
                                 onChange={handleRoleNameChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                                required
+                                
                             />
                         </div>
                         <div className="flex justify-end">

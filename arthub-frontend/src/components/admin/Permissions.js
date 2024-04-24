@@ -1,24 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import useApiAxios from '../config/axios';
+import useApiAxios from '../../config/axios';
+import PermissionsPopup from '../PermissionsPopup';
 
 function Permissions() {
-    
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [showAddPermissions, setShowAddPermissions] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchPermissions();
     }, []);
 
     const fetchPermissions = () => {
+        setLoading(true);
         useApiAxios.get('/permissions')
             .then(response => {
                 setData(response.data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
+    };
+    const handleAddpermissionsClose = () => {
+        setShowAddPermissions(false);
+        fetchPermissions();
     };
 
     const deletePermission = (permissionId) => {
@@ -32,10 +42,14 @@ function Permissions() {
             });
     };
 
+    const handleAddPermissionsClick = () => {
+        setShowAddPermissions(true);
+    };
+
     const columns = [
         {
             name: 'ID',
-            selector: row => row.id,
+            selector: row => Number(row.id),
             sortable: true,
         },
         {
@@ -47,7 +61,6 @@ function Permissions() {
             name: 'Actions',
             cell: row => (
                 <div className='flex'>
-                    {/* <button onClick={() => handleEditPermitionClick(row.id)} className='bg-yellow-500 text-white p-2 rounded-md mr-2'>Edit</button> */}
                     <button onClick={() => deletePermission(row.id)} className='p-2 rounded-md bg-red-500 text-white'>Delete</button>
                 </div>
             ),
@@ -62,7 +75,7 @@ function Permissions() {
         <div className="max-w-4xl mx-auto px-4 py-8">
             <div className='flex justify-between py-1'>
                 <h2 className="text-2xl mb-4">Permissions</h2>
-                <button  className='bg-blue-500 text-white p-2 rounded-md mr-2'>New Permissions</button> 
+                <button onClick={handleAddPermissionsClick} className='bg-blue-500 text-white p-2 rounded-md mr-2'>New Permissions</button>
             </div>
 
             <div className="mb-4">
@@ -74,13 +87,19 @@ function Permissions() {
                 />
             </div>
 
-            <DataTable
-                columns={columns}
-                data={filteredData}
-                pagination
-                highlightOnHover
-                striped
-            />
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <DataTable
+                    columns={columns}
+                    data={filteredData}
+                    pagination
+                    highlightOnHover
+                    striped
+                />
+            )}
+
+            {showAddPermissions && <PermissionsPopup onClose={() => handleAddpermissionsClose()} />}
         </div>
     );
 }
