@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -87,13 +88,15 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/users/{userId}/roles/{roleId}', [UserController::class, 'removeRoleTo']);
 
         // categories routes 
-        Route::get('/categories',[CategorieController::class,'index']);
         Route::get('/categories/{id}',[CategorieController::class,'show']);
         Route::post('/categories',[CategorieController::class,'store']);
         Route::put('/categories/{id}',[CategorieController::class,'update']);
         Route::delete('/categories/{categorie}',[CategorieController::class,'destroy']);
-
+        
     });
+    Route::get('/categories',[CategorieController::class,'index']);
+    Route::post('/articles',[ArticleController::class,'store']);
+    Route::get('/articles',[ArticleController::class,'index']);
     // folow
     Route::post('/users/{user}/follow', [UserController::class, 'follow'])->name('users.follow');
     Route::post('/users/{user}/unfollow', [UserController::class, 'unfollow'])->name('users.unfollow');

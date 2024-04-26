@@ -7,7 +7,7 @@ function SideNav({ handleComponentChange }) {
   const [currentUser, setCurrentUser] = useContext(UserContext);
 
   return (
-    <div className="w-full  bg-gray-50 border-r border-gray-200  overflow-y-auto">
+    <div className="w-full   bg-gray-50 border-r border-gray-200 rounded-r-lg  overflow-y-auto">
       <div className="py-4 px-6">
         <Link to="/">
           <span className="ml-2 text-black text-lg font-bold">ArtHub</span>

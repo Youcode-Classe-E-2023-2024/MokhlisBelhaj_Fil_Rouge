@@ -25,9 +25,7 @@ const GestionRole = ({ RoleId, onClose }) => {
 
         fetchData();
 
-        return () => {
-            // Cleanup function if needed
-        };
+      
     }, [RoleId]);
 
     const removePermission = async (permissionId) => {

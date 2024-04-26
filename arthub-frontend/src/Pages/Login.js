@@ -50,7 +50,7 @@ const Login = () => {
                 {/* Your background image */}
             </div>
 
-            <div className="w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
+            <div className="w-full md:max-w-md lg:max-w-full md:mx-auto  md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
                 flex items-center justify-center backdrop-blur-xl">
 
                 <div className="w-full h-100">
@@ -79,7 +79,7 @@ const Login = () => {
                                 {error && <p className="text-white text-center text-lg bg-red-500 font-bold rounded-lg  mt-2">{error}</p>} {/* Display error message if error state is not empty */}
 
                         <div className="text-right mt-2">
-                            <a href="#" className="text-lg font-semibold text-white hover:text-blue-700 font-bold focus:text-blue-700">Forgot Password?</a>
+                            <a href="#" className="text-lg font-semibold text-white hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
                         </div>
 
                         <button type="submit"

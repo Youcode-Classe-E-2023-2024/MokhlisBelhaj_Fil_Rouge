@@ -31,7 +31,7 @@ const Profile = () => {
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
             <div>
-              <p className="font-bold text-gray-700 text-xl">22</p>
+              <p className="font-bold text-gray-700 text-xl">2</p>
               <p className="text-gray-400">Articles</p>
             </div>
             <div>

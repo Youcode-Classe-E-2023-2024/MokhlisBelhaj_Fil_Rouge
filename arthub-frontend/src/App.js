@@ -19,7 +19,7 @@ const App = () => {
     <div className='bg-blue-100'>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />}  />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Article" element={<Article />} />

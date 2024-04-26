@@ -81,7 +81,7 @@ const Register = () => {
 
   return (
     <section className="flex flex-col md:flex-row  items-center  " style={{ backgroundImage: "url('https://images.unsplash.com/photo-1615184697985-c9bde1b07da7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}>
-    <div className="w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/2 h-fit px-6 lg:px-16 xl:px-12 flex items-center justify-center backdrop-blur-lg ">
+    <div className="w-full md:max-w-md lg:max-w-full md:mx-auto  md:w-1/2 xl:w-1/2 h-fit px-6 lg:px-16 xl:px-12 flex items-center justify-center backdrop-blur-lg ">
       <div className="w-full min-h-screen h-fit p-5">
         <Link to="/" className="text-8xl text-white text-center font-semibold outline-text si">
           <h1 >ArtHub</h1>
@@ -112,7 +112,7 @@ const Register = () => {
             <input type="password" name="password_confirmation" value={password_confirmation} onChange={handleChange} placeholder="Confirm Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required />
             {errors && errors.password_confirmation && <p className="text-red-500">{errors.password_confirmation[0]}</p>}
           </div>
-          <button type="submit" className="mt-4 w-full block bg-yellow-500 hover:bg-yellow-400 focus:bg-yellow-400 text-white font-semibold rounded-lg px-4 py-3 mt-6">Sign Up</button>
+          <button type="submit" className="mt-4 w-full block bg-yellow-500 hover:bg-yellow-400 focus:bg-yellow-400 text-white font-semibold rounded-lg px-4 py-3 ">Sign Up</button>
         </form>
         <hr className="my-6 border-gray-300 w-full" />
         <p className="mt-8 text-md font-bold text-center  w-fit backdrop-blur-xl">Already have an account? <Link to="/login" className="text-white hover:text-blue-700  font-semibold backdrop-blur-xl">Sign in</Link></p>

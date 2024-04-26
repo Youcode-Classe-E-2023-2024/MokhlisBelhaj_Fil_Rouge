@@ -31,9 +31,9 @@ const MyProfile = () => {
   }
 
   return (
-    <div className=' h-full '>
+    <div className='min-h-screen  h-full '>
       <div className="flex  ">
-        <div className="w-  fixed overflow-y-auto bg-gray-50 border-r border-gray-200">
+        <div className="w-  fixed overflow-y-auto ">
           <SideNav handleComponentChange={handleComponentChange} />
         </div>
         <div className="w-3/4 ml-64 pl-4 ">
