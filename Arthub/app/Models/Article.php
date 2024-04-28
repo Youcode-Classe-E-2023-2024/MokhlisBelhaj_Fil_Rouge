@@ -49,4 +49,8 @@ class Article extends Model
     {
         return $this->hasMany(Rating::class);
     }
+
+    public function Comment(){
+        return $this->belongsToMany(Comment::class);
+    }
 }
