@@ -78,9 +78,8 @@ const Users = () => {
         {
             name: 'Actions',
             cell: row => (
-                <div className='flex flex-col gap-1 py-1'>
+                <div className='flex flex-col gap-1 py-1' >
                     <button onClick={() => handleGestionRoleClick(row.id)} className='w-fitt bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out'>Manage Role</button>
-                    <button onClick={() => retireUser(row.id)} className='p-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition duration-300 ease-in-out'>Retire</button>
                 </div>
             ),
         },
@@ -91,7 +90,7 @@ const Users = () => {
     );
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className=" mx-auto px-4 py-8">
             <div className='flex justify-between py-1'>
                 <h2 className="text-2xl mb-4">Users</h2>
             </div>

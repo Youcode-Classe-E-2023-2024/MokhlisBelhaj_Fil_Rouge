@@ -13,6 +13,6 @@ class ArtistsSeeder extends Seeder
     public function run(): void
     {
         //
-        User::factory()->count(12)->create();
+        User::factory()->count(6)->create();
     }
 }

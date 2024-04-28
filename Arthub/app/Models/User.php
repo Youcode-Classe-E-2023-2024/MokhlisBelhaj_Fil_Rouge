@@ -78,6 +78,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class); // User has many articles
     }
+    public function Rating(){
+        return $this->hasMany(Rating::class);
+    }
    
 
     

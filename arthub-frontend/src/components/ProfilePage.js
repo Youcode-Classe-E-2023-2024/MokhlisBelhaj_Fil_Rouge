@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import ArticleSection from './ArticleSection';
+import ArticleProfile from './ArticleProfile';
 import UserContext from '../auth/user-context';
 import useApiAxios from '../config/axios';
 import Subscribe from './button/subscribe';
 
 const Profile = () => {
   const [currentUser, setCurrentUser] = useContext(UserContext);
+  const [articleCount, setArticleCount] = useState(0); 
+  const handleArticleData = (articles) => {
+      setArticleCount(articles.length); 
+  };
   const { id } = useParams();
   const [user, setUser] = useState();
   useEffect(() => {
@@ -26,16 +30,16 @@ const Profile = () => {
   };
 
   return (
-    <div className="p-16">
+    <div className="min-h-screen p-16">
       <div className="p-8 bg-white shadow mt-24">
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
             <div>
-              <p className="font-bold text-gray-700 text-xl">2</p>
+              <p className="font-bold text-gray-700 text-xl">{user?.Article}</p>
               <p className="text-gray-400">Articles</p>
             </div>
             <div>
-              <p className="font-bold text-gray-700 text-xl">10</p>
+              <p className="font-bold text-gray-700 text-xl">{user?.followers}</p>
               <p className="text-gray-400">followers</p>
             </div>
           </div>
@@ -58,7 +62,7 @@ const Profile = () => {
           <h1 className="text-4xl font-medium text-gray-700">{user?.name || ''} <span className="font-light text-gray-500">{user?.role || ''}</span></h1>
         </div>
       </div>
-      <ArticleSection />
+      <ArticleProfile id={id} onDataFetch={handleArticleData} />
     </div>
   );
 };

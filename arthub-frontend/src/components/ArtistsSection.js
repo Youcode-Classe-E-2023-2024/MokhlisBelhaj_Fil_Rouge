@@ -38,7 +38,7 @@ const ArtistsSection = () => {
           />
           <h2 className="text-gray-800 font-semibold text-lg">{user.name}</h2>
           <Link
-            to={`/profile/${user.id}`}
+            to={`/profile/${user.name}`}
             className="mt-4 mb-2 bg-teal-400 rounded-full px-12 py-1 text-gray-100 font-semibold hover:bg-teal-300 focus:outline-none"
           >
             View Profile

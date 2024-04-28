@@ -77,29 +77,23 @@ class UserController extends Controller
      * )
      */
 
-    public function index()
-    {
-        $usersWithRoles = User::with('roles:name')->get()->map(function ($user) {
-            $roles = $user->roles->pluck('name')->toArray();
-            $userArray = $user->toArray();
-            $userArray['roles'] = $roles;
-            return $userArray;
-        });
-
-        return response()->json($usersWithRoles);
-    }
-
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
+     public function index()
+     {
+         $usersWithoutAdmin = User::with('roles:name')
+             ->whereDoesntHave('roles', function ($query) {
+                 $query->where('name', 'admin'); 
+             })
+             ->get() 
+             ->map(function ($user) { 
+                 $roles = $user->roles->pluck('name')->toArray(); 
+                 $userArray = $user->toArray(); // Convert user to an array
+                 $userArray['roles'] = $roles; // Add roles to the user array
+                 return $userArray;
+             });
+     
+         return response()->json($usersWithoutAdmin); // Return the result as JSON
+     }
+     
     /**
      * Store a newly created resource in storage.
      *
@@ -197,20 +191,14 @@ class UserController extends Controller
     public function show($id)
     {
 
-
-        // $user = User::findOrFail($id);
-        // // $role = $user->roles;
-        // $data=[
-        //     "user" => $user,
-        //     // "role" => $role
-        // ];
-
-        // return response()->json($data);
         $user = User::findOrFail($id);
         $userWithRoles = $user->load('roles:name');
         $userArray = $userWithRoles->toArray();
         $roles = $userWithRoles->roles->toArray();
         $userArray['roles'] = $roles;
+        $userArray['Article'] = $user->articles()->count();
+        $userArray['followers'] = $user->followers()->count();
+
 
         return response()->json($userArray);
     }

@@ -1,27 +1,15 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionsController;
-use Illuminate\Validation\Rules\Can;
+use App\Http\Controllers\RatingController;
+use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-// Public routes of authtication
+// Public authentication routes
 Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
@@ -30,79 +18,81 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/mot-de-passe/reset/', 'reset');
 });
 
+// Public content-related routes
 Route::get('/test/{id}', [UserController::class, 'test']);
 Route::get('/acteur', [UserController::class, 'acteur']);
 Route::get('/users/{id}', [UserController::class, 'show']);
+Route::get('/categories', [CategorieController::class, 'index']);
+Route::get('/articles', [ArticleController::class, 'index']);
+Route::get('/articles/home', [ArticleController::class, 'articleHome']);
+Route::get('/articles/{article}', [ArticleController::class, 'show']);
+Route::get('/myArticle/{user}', [ArticleController::class, 'userArticles']);
+Route::get('/article/{id}/rating', [RatingController::class, 'getAverageRating']);
 
-
-// Protected routes 
+// Protected routes (require authentication)
 Route::middleware('auth:api')->group(function () {
 
+    // User-related protected routes
     Route::get('/refreshUser', [AuthController::class, 'refreshUser']);
-
-    // logout route
+    Route::post('/ratings', [RatingController::class, 'store']);
+    Route::get('/ratings/{article}', [RatingController::class, 'show']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    
+    // Articles management routes
+    Route::post('/articles', [ArticleController::class, 'store']);
+    Route::put('/articles/{article}', [ArticleController::class, 'update']);
+    Route::delete('/articles/{article}', [ArticleController::class, 'destroy']);
+    Route::get('/myArticle', [ArticleController::class, 'myArticle']);
+    
+    // Following-related routes
+    Route::post('/users/{user}/follow', [UserController::class, 'follow'])->name('users.follow');
+    Route::post('/users/{user}/unfollow', [UserController::class, 'unfollow'])->name('users.unfollow');
+    Route::post('/users/{user}/unfollower', [UserController::class, 'unfollower'])->name('users.unfollower');
+    Route::get('/followers', [UserController::class, 'GetFollowers']);
+    Route::get('/following', [UserController::class, 'GetFollowing']);
+    Route::get('/following/{userId}', [UserController::class, 'isFollowing']);
 
-    // Protected admin route routes 
+    // Admin-only routes
     Route::middleware('role:admin')->group(function () {
-        // Routes pour les rôles
+        // Roles management
         Route::get('/roles', [RoleController::class, 'index']);
         Route::post('/roles', [RoleController::class, 'store']);
         Route::get('/roles/{role}', [RoleController::class, 'show']);
         Route::put('/roles/{role}', [RoleController::class, 'update']);
         Route::delete('/roles/{role}', [RoleController::class, 'destroy']);
-
-        // Routes pour les permissions
+        
+        // Permissions management
         Route::get('/permissions', [PermissionsController::class, 'index']);
         Route::post('/permissions', [PermissionsController::class, 'store']);
         Route::get('/permissions/{permission}', [PermissionsController::class, 'show']);
         Route::put('/permissions/{permission}', [PermissionsController::class, 'update']);
         Route::delete('/permissions/{permission}', [PermissionsController::class, 'destroy']);
-
-        // Route pour assigner une permission à un rôle
+        
+        // Role-Permission association
         Route::post('roles/{roleId}/permissions/{permissionId}', [RoleController::class, 'givePermissionTo']);
-        // Route pour savoir les permision assigner à un rôle
         Route::get('roles/{roleId}/permissions', [RoleController::class, 'getPermissions']);
-        // Route pour retirer une permission d'un rôle
         Route::delete('/roles/{roleId}/permissions/{permissionId}', [RoleController::class, 'removePermissionTo']);
 
-        // Obtenir tous les utilisateurs
-        Route::get('/users', [UserController::class, 'index'])->middleware('role:admin');
-        // Créer un nouvel utilisateur
+        // User management
+        Route::get('/users', [UserController::class, 'index']);
         Route::post('/users', [UserController::class, 'store']);
-        // Obtenir un utilisateur spécifique par ID
-        // Route::get('/users/{id}', [UserController::class, 'show']);
-        // Mettre à jour un utilisateur par ID
         Route::put('/users/{user}', [UserController::class, 'update']);
-        // Supprimer un utilisateur par ID
         Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
-
-        // Assigner un rôle à un utilisateur par ID utilisateur et ID de rôle
+        // Role-User association
         Route::post('/users/{userId}/roles/{roleId}', [UserController::class, 'giveRoleTo']);
-
-        // Route pour connaître les rôles assignés à un utilisateur
         Route::get('/users/{userId}/roles', [UserController::class, 'getRoles']);
-
-        // Supprimer un rôle d'un utilisateur par ID utilisateur et ID de rôle
         Route::delete('/users/{userId}/roles/{roleId}', [UserController::class, 'removeRoleTo']);
 
-        // categories routes 
-        Route::get('/categories/{id}',[CategorieController::class,'show']);
-        Route::post('/categories',[CategorieController::class,'store']);
-        Route::put('/categories/{id}',[CategorieController::class,'update']);
-        Route::delete('/categories/{categorie}',[CategorieController::class,'destroy']);
+        // Category management
+        Route::get('/categories/{id}', [CategorieController::class, 'show']);
+        Route::post('/categories', [CategorieController::class, 'store']);
+        Route::put('/categories/{id}', [CategorieController::class, 'update']);
+        Route::delete('/categories/{categorie}', [CategorieController::class, 'destroy']);
         
+        // Article status management
+        Route::put('/article/status/{article}', [ArticleController::class, 'statusAction']);
+        Route::get('/article/all', [ArticleController::class, 'allArticle']);
     });
-    Route::get('/categories',[CategorieController::class,'index']);
-    Route::post('/articles',[ArticleController::class,'store']);
-    Route::get('/articles',[ArticleController::class,'index']);
-    // folow
-    Route::post('/users/{user}/follow', [UserController::class, 'follow'])->name('users.follow');
-    Route::post('/users/{user}/unfollow', [UserController::class, 'unfollow'])->name('users.unfollow');
-    Route::post('/users/{user}/unfollower', [UserController::class, 'unfollower'])->name('users.unfollow');
-    Route::get('followers', [UserController::class, 'GetFollowers']);
-    Route::get('following', [UserController::class, 'GetFollowing']);
-    Route::get('following/{userId}', [UserController::class, 'isFollowing']);
-    
 });
+

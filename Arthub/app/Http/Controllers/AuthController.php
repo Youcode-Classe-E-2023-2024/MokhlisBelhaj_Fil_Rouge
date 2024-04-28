@@ -72,7 +72,7 @@ class AuthController extends Controller
         
        
         $validate = Validator::make($request->all(), [
-            'name' => 'required|string|max:250',
+            'name' => 'required|string|max:250|unique:users,name',
             'email' => 'required|string|max:250|unique:users,email',
             'password' => 'required|string|min:8',
             'password_confirmation' => 'required|same:password',
@@ -350,6 +350,7 @@ class AuthController extends Controller
     public function refreshUser(Request $request)
     {
         $user = auth()->user();
+
         $data['user'] = [
             'id' => $user->id,
             'name' => $user->name,
@@ -358,15 +359,11 @@ class AuthController extends Controller
             'email_verified_at' => $user->email_verified_at,
             'created_at' => $user->created_at,
             'updated_at' => $user->updated_at,
-            'role' => $user->roles->pluck('name')->implode(', ')
+            'role' => $user->roles->pluck('name')->implode(', '),
+            'countfollow'=>$user->followers()->count(),
+            'countArticles'=>$user->articles()->count(),
         ];
-        // $token = $request->bearerToken();
-        // $user = null;
-        // if (!!$token) {
-        //     $user = User::where([
-        //         'remember_token' => $token
-        //     ])->first();
-        // }  
+         
         return response()->json( $data, 200);
     }
 }

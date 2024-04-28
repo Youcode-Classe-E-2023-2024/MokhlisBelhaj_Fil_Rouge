@@ -9,6 +9,7 @@ function Upload() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  
   useEffect(() => {
     fetchCategory()
   }, []);
@@ -51,6 +52,7 @@ function Upload() {
       setDescription('');
       setSelectedCategory('');
       setUploadedFiles([]);
+
     } catch (error) {
       console.error('API request failed:', error);
     }

@@ -12,6 +12,7 @@ export const refreshUserQuery = async (setCurrentUser) => {
       setCurrentUser(user || null);
     } else {
       setCurrentUser(null);
+
     }
   } catch (error) {
     console.error("refreshUser failed:", error);
@@ -22,6 +23,7 @@ export const logoutQuery = async (setCurrentUser) => {
     try{
 
         const response = await useApiAxios.post("/logout");
+        window.location.href("/login");
     } catch (error) {
         console.error("logout failed:", error);
       }
@@ -29,4 +31,6 @@ export const logoutQuery = async (setCurrentUser) => {
 
   setCurrentUser(null);
   localStorage.removeItem("token");
+  window.location.href="/";
+
 };

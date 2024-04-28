@@ -38,24 +38,7 @@ const CloudinaryUpload = ({
       public_id: response.data.public_id,
     };
   };
-  // const deleteFile = async (public_id) => {
-   
-  
-  //   try {
-  //     const response = await axios.post('https://api.cloudinary.com/v1_1/dgnes9vrh/destroy', {
-  //       public_id: public_id,
-  //       timestamp: '173719931',
-  //       api_key: '369931638131835',
-  //       signature: 'a788d68f86a6f868af'
-  //     });
-  
-  //     console.log('Delete response:', response.data);
-  //     // Handle the response accordingly
-  //   } catch (error) {
-  //     console.error('Error deleting image:', error);
-  //     // Handle the error accordingly
-  //   }
-  // };
+
   
   
   

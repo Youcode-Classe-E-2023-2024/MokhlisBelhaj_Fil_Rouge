@@ -13,6 +13,7 @@ import Profile from './components/ProfilePage';
 import MyProfil  from './Pages/MyProfil';
 import CloudTest from './Pages/cloudTest';
 import Dashboard from './Pages/Dashboard';
+import ArtistsDetail from './Pages/ArticleDetail';
 
 const App = () => {
   return (
@@ -22,8 +23,9 @@ const App = () => {
         <Route path="/" element={<Home />}  />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/Article" element={<Article />} />
+        <Route path="/Articles" element={<Article />} />
         <Route path="/Artists" element={<Artists />} />
+        <Route path="/Article/:id" element={<ArtistsDetail />} />
         <Route path= "/Profile/:id" element={<Profile />} />
         <Route path="/Myprofile" element={<MyProfil />} />  
         <Route path="/CloudTest" element={<CloudTest />} />  

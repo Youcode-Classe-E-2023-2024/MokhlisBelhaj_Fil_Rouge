@@ -76,4 +76,4 @@ Le projet "Arthub" a pour but de créer une plateforme en ligne dynamique, favor
 - Utilisation de techniques de marketing en ligne pour promouvoir la plateforme auprès de la communauté artistique et des amateurs d'art.
 
 ### 6. Deadlines
-- Date limite : 2 avril 2024, avec des jalons intermédiaires pour assurer une progression régulière du projet.
+- Date limite : 5 mai 2024.

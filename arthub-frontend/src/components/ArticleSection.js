@@ -1,50 +1,102 @@
-// ArticleSection.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import useApiAxios from '../config/axios';
+import UpdateArticle from './updateArticle';
 
-const ArticleSection = () => {
-  return (
-    <div className="max-w-7xl mx-auto px-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {[...Array(8)].map((_, i) => (
-          <ArticleCard key={i} index={i} />
-        ))}
-      </div>
-    </div>
-  );
-};
+const Article = ({ onDataFetch }) => {
+  const [articles, setArticles] = useState([]);
+  const [showUpdateArticle, setUpdateArticle] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
-const ArticleCard = ({ index }) => {
+
+  useEffect(() => {
+    fetchArticles();
+  }, []);
+
+  const handleUpdateArticleClose = () => {
+    setUpdateArticle(false);
+    setSelectedArticle(null);
+    fetchArticles();
+  };
+
+  const fetchArticles = () => {
+    useApiAxios.get('/myArticle')
+      .then((response) => {
+        setArticles(response.data);
+        if (onDataFetch) {
+          onDataFetch(response.data);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const deleteArticle = (id) => {
+    useApiAxios.delete(`/article/${id}`)
+      .then((response) => {
+        fetchArticles();
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const truncateDescription = (description) => {
+    if (description.length > 150) {
+      return description.substring(0, 150) + '...';
+    } else {
+      return description;
+    }
+  };
+
+  const handleUpdateClick = (article) => {
+    setUpdateArticle(true);
+    setSelectedArticle(article);
+  };
+
   return (
-    <div className= " mt-4 bg-white rounded-lg shadow-md overflow-hidden">
-      <a href="#" className="block">
-        <img
-          src={`https://picsum.photos/seed/${index}/300/200`}
-          className="w-full h-auto"
-          alt={`Article ${index}`}
-        />
-      </a>
-      <div className="p-4">
-        <div className="flex items-center mb-4">
-          <img
-            src={`https://picsum.photos/seed/${index}1/40/40`}
-            className="rounded-full w-10 h-10 mr-2"
-            alt={`Profile ${index}`}
-          />
+    <div className="flex flex-wrap">
+      {articles.map((article, index) => (
+        <div key={index} className="  w-full md:w-1/2 lg:w-1/3 p-4">
+          <div className="flex flex-col justify-between bg-white h-full rounded-lg shadow-md overflow-hidden">
           <div>
-            <a href="#" className="block text-lg font-semibold text-blue-600 hover:underline">
-              Learn CSS Box Model in 8 Minutes
-            </a>
-            <a href="#" className="text-gray-600 text-sm hover:text-gray-800">
-              Web Dev Simplified
-            </a>
+          <Link
+              to={`/article/${article.id}`} className="block">
+              <img
+                src={article.media[0].mediaUrl}
+                className="w-full h-auto max-h-[250px]"
+                alt={`Article ${index}`}
+              />
+            </Link>
+           
+              <div className='p-4'> 
+                <div className="flex justify-center mb-4">
+                <div>
+                  <Link
+                    to={`/article/${article.id}`} className="block text-lg font-semibold text-blue-600 hover:underline">
+                    {article.title}
+                  </Link>
+                </div>
+              </div>
+                <p className="text-gray-700">
+                  {truncateDescription(article.description)}
+                </p>
+                </div>
           </div>
-        </div>
-        <p className="text-gray-700">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-      </div>
+
+              <div className='flex justify-center  gap-2 p-3'>
+                <button onClick={() => deleteArticle(article.id)} className='bg-red-600 hover:bg-red-900 hover:uppercase hover:animate-bounce text-white font-bold py-2 px-4 rounded'>
+                  delete
+                </button>
+                <button onClick={() => handleUpdateClick(article)} className='bg-blue-600 hover:bg-blue-900 hover:uppercase hover:animate-bounce text-white font-bold py-2 px-4 rounded'>
+                  update
+                </button>
+              </div>
+            </div>
+
+          </div>
+      ))}
+
+      {showUpdateArticle && <UpdateArticle article={selectedArticle} onClose={handleUpdateArticleClose} />}
     </div>
   );
 };
 
-export default ArticleSection;
+export default Article;
