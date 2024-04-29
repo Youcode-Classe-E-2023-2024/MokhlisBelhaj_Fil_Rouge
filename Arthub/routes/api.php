@@ -3,11 +3,13 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // Public authentication routes
 Route::controller(AuthController::class)->group(function () {
@@ -43,6 +45,12 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/articles/{article}', [ArticleController::class, 'update']);
     Route::delete('/articles/{article}', [ArticleController::class, 'destroy']);
     Route::get('/myArticle', [ArticleController::class, 'myArticle']);
+    // routes for comments
+    Route::get('articles/{article}/comments', [CommentController::class, 'index']); 
+    Route::post('comments', [CommentController::class, 'store']); 
+    Route::get('comments/{comment}', [CommentController::class, 'show']); 
+    Route::put('comments/{comment}', [CommentController::class, 'update']); 
+    Route::delete('comments/{comment}', [CommentController::class, 'destroy']); 
     
     // Following-related routes
     Route::post('/users/{user}/follow', [UserController::class, 'follow'])->name('users.follow');
@@ -93,6 +101,11 @@ Route::middleware('auth:api')->group(function () {
         // Article status management
         Route::put('/article/status/{article}', [ArticleController::class, 'statusAction']);
         Route::get('/article/all', [ArticleController::class, 'allArticle']);
+
+        // Dashboard routes
+        Route::get('/dashboard', [UserController::class, 'userCount']); 
+        Route::get('/mostActiveArticle', [ArticleController::class, 'mostActiveArticle']); 
+        
     });
 });
 

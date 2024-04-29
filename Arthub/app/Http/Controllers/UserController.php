@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -77,23 +78,23 @@ class UserController extends Controller
      * )
      */
 
-     public function index()
-     {
-         $usersWithoutAdmin = User::with('roles:name')
-             ->whereDoesntHave('roles', function ($query) {
-                 $query->where('name', 'admin'); 
-             })
-             ->get() 
-             ->map(function ($user) { 
-                 $roles = $user->roles->pluck('name')->toArray(); 
-                 $userArray = $user->toArray(); // Convert user to an array
-                 $userArray['roles'] = $roles; // Add roles to the user array
-                 return $userArray;
-             });
-     
-         return response()->json($usersWithoutAdmin); // Return the result as JSON
-     }
-     
+    public function index()
+    {
+        $usersWithoutAdmin = User::with('roles:name')
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'admin');
+            })
+            ->get()
+            ->map(function ($user) {
+                $roles = $user->roles->pluck('name')->toArray();
+                $userArray = $user->toArray(); // Convert user to an array
+                $userArray['roles'] = $roles; // Add roles to the user array
+                return $userArray;
+            });
+
+        return response()->json($usersWithoutAdmin); // Return the result as JSON
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -558,11 +559,17 @@ class UserController extends Controller
         return response()->json([$isFollowing]);
     }
 
-    public function test($id)
+
+    public function userCount()
     {
-        $user = user::findOrFail($id);
-        $user->roles;
-        dd($user->roles);
-        return $id;
+        $userCount = User::count();
+        $acteurRole = Role::where('name', 'acteur')->first();
+        $usersWithActeurRole = $acteurRole ? $acteurRole->users()->count() : 0;
+        $articleCount = Article::count();
+        return response()->json([
+            'userCount' => $userCount,
+            'acteursCount' => $usersWithActeurRole,
+            'articleCount' => $articleCount
+        ]);
     }
 }

@@ -51,10 +51,7 @@ const Profile = () => {
           {currentUser ? (
             <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
               <Subscribe id={id} />
-              <button className="
-                py-2 px-6 md:px-4 uppercase rounded bg-gray-200 hover:bg-gray-300 shadow-md hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 focus:outline-none
-               
-               ">Message</button>
+             
             </div>
           ) : null}
         </div>

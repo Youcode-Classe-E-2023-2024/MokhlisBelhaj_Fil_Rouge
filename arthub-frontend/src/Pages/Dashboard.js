@@ -44,7 +44,7 @@ function Dashboard() {
          <div className="w-  fixed overflow-y-auto bg-gray-50 border-r border-gray-200">
            <Sidebaredash handleComponentChange={handleComponentChange} />
          </div>
-         <div className="w-3/4 ml-64 pl-4 ">
+         <div className="md:w-3/4 ml-36 pl-4 ">
            {contentComponent}
          </div>
        </div>

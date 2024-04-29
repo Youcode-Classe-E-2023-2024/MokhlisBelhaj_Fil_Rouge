@@ -52,6 +52,19 @@ public function articleHome()
     
         return response()->json($articles); 
     }
+    public function mostActiveArticle()
+    {
+        // Obtenir le nombre de commentaires et de notes pour chaque article
+        $mostActiveArticle = Article::withCount(['Comment', 'ratings'])
+            ->orderByRaw('Comment_count + ratings_count DESC')
+            ->with('media','user', 'categorie')
+            ->first();
+
+
+        return response()->json([
+            'mostActiveArticle' => $mostActiveArticle,
+        ]);
+    }
 
 
     /**

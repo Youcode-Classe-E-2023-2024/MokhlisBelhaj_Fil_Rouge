@@ -51,6 +51,6 @@ class Article extends Model
     }
 
     public function Comment(){
-        return $this->belongsToMany(Comment::class);
+        return $this->hasMany(Comment::class);
     }
 }

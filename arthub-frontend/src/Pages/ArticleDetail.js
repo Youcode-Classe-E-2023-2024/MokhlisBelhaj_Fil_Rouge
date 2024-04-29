@@ -5,6 +5,7 @@ import UserContext from '../auth/user-context';
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import StarRating from '../components/StarRating';
 import AverageRating from '../components/AverageRating';
+import Comments from '../components/Comments';
 
 
 
@@ -106,10 +107,8 @@ function ArtistsDetail() {
                                         </Link>
                                     </p>
                                     <p><span className='font-bold'>created_at : </span>{article.created_at.split('T')[0] }
-                                    </p>{article.updated_at &&
-                                    <p><span className='font-bold'>created_at : </span>{article.created_at.split('T')[0] }
                                     </p>
-                                    }
+                                    
                                         {currentUser?<div className=' w-40'><StarRating
                                         articleId={article.id}
                                         initialRating={article.initialRating}
@@ -136,6 +135,9 @@ function ArtistsDetail() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className='max-w-7xl mx-auto px-4 sm:p-6 lg:p-10 rounded-xl mt-6'>
+                        <Comments id={article.id}  />
                     </div>
                 </div>
             </div>

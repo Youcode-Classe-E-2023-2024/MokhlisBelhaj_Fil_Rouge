@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import UserContext from '../auth/user-context';
 import { useContext } from 'react';
+import { GoHome, GoUpload } from "react-icons/go";
+
 
 function SideNav({ handleComponentChange }) {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -18,11 +20,8 @@ function SideNav({ handleComponentChange }) {
       <div className="mb-10">
 
 
-        <button onClick={() => handleComponentChange('profile')} className="flex items-center px-6 py-2.5 text-gray-500 hover:text-orange-600 group">
-          <svg className="h-5 w-5 text-gray-400 mr-2 group-hover:text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-          profile
+        <button onClick={() => handleComponentChange('profile')} className="flex items-center px-6 py-2.5 text-gray-500 hover:text-orange-600 group gap-2">
+        <GoHome /> profile
         </button>
         <button onClick={() => handleComponentChange('subscribe')} className="flex items-center px-6 py-2.5 text-gray-500 hover:text-orange-600 group">
           <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -39,28 +38,11 @@ function SideNav({ handleComponentChange }) {
           </svg>
           subscribe
         </button>
-        <button onClick={() => handleComponentChange('communication')} className="flex items-center px-6 py-2.5 text-gray-500 hover:text-orange-600 group">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 256 256" xmlSpace="preserve"
-            className="h-5 w-5 text-gray-400 mr-2 group-hover:text-orange-500"
-          >
-            <g style={{ stroke: 'none', strokeWidth: 0, strokeDasharray: 'none', strokeLinecap: 'butt', strokeLinejoin: 'miter', strokeMiterlimit: 10, fill: 'none', fillRule: 'nonzero', opacity: 1 }} transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-              <path d="M 14.972 86.134 c -0.193 0 -0.388 -0.038 -0.574 -0.116 c -0.551 -0.231 -0.909 -0.77 -0.909 -1.368 V 67.853 H 5.177 C 2.322 67.853 0 65.531 0 62.676 V 9.043 c 0 -2.854 2.322 -5.177 5.177 -5.177 h 79.646 C 87.678 3.866 90 6.189 90 9.043 v 53.633 c 0 2.855 -2.322 5.177 -5.177 5.177 H 34.206 L 16.011 85.709 C 15.728 85.987 15.353 86.134 14.972 86.134 z M 5.177 6.833 c -1.218 0 -2.21 0.991 -2.21 2.21 v 53.633 c 0 1.219 0.991 2.21 2.21 2.21 h 9.795 c 0.82 0 1.484 0.664 1.484 1.484 v 14.746 L 32.56 65.311 c 0.278 -0.272 0.65 -0.425 1.039 -0.425 h 51.224 c 1.219 0 2.21 -0.991 2.21 -2.21 V 9.043 c 0 -1.218 -0.991 -2.21 -2.21 -2.21 H 5.177 z" style={{ stroke: 'none', strokeWidth: 1, strokeDasharray: 'none', strokeLinecap: 'butt', strokeLinejoin: 'miter', strokeMiterlimit: 10, fill: 'rgb(0,0,0)', fillRule: 'nonzero', opacity: 1 }} transform="matrix(1 0 0 1 0 0)" strokeLinecap="round" />
-            </g>
-          </svg>
-          communication
-        </button>
         
       
          {currentUser?.role === "acteur" ?<>
-          <button onClick={() => handleComponentChange('uplode')} className="flex items-center px-6 py-2.5 text-gray-500 hover:text-orange-600 group">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 256 256" xmlSpace="preserve"
-            className="h-5 w-5 text-gray-400 mr-2 group-hover:text-orange-500"
-          >
-            <g style={{ stroke: 'none', strokeWidth: 0, strokeDasharray: 'none', strokeLinecap: 'butt', strokeLinejoin: 'miter', strokeMiterlimit: 10, fill: 'none', fillRule: 'nonzero', opacity: 1 }} transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-              <path d="M 14.972 86.134 c -0.193 0 -0.388 -0.038 -0.574 -0.116 c -0.551 -0.231 -0.909 -0.77 -0.909 -1.368 V 67.853 H 5.177 C 2.322 67.853 0 65.531 0 62.676 V 9.043 c 0 -2.854 2.322 -5.177 5.177 -5.177 h 79.646 C 87.678 3.866 90 6.189 90 9.043 v 53.633 c 0 2.855 -2.322 5.177 -5.177 5.177 H 34.206 L 16.011 85.709 C 15.728 85.987 15.353 86.134 14.972 86.134 z M 5.177 6.833 c -1.218 0 -2.21 0.991 -2.21 2.21 v 53.633 c 0 1.219 0.991 2.21 2.21 2.21 h 9.795 c 0.82 0 1.484 0.664 1.484 1.484 v 14.746 L 32.56 65.311 c 0.278 -0.272 0.65 -0.425 1.039 -0.425 h 51.224 c 1.219 0 2.21 -0.991 2.21 -2.21 V 9.043 c 0 -1.218 -0.991 -2.21 -2.21 -2.21 H 5.177 z" style={{ stroke: 'none', strokeWidth: 1, strokeDasharray: 'none', strokeLinecap: 'butt', strokeLinejoin: 'miter', strokeMiterlimit: 10, fill: 'rgb(0,0,0)', fillRule: 'nonzero', opacity: 1 }} transform="matrix(1 0 0 1 0 0)" strokeLinecap="round" />
-            </g>
-          </svg>
-          uplode  
+          <button onClick={() => handleComponentChange('uplode')} className="flex items-center px-6 py-2.5 text-gray-500 hover:text-orange-600 group gap-2">
+          <GoUpload /> uplode  
         </button>
         </>:<></>}
         

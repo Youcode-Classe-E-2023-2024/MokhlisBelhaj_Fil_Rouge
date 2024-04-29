@@ -20,9 +20,6 @@ const MyProfile = () => {
     case 'subscribe':
       contentComponent = <Subscribe />;
       break;
-    case 'communication':
-      contentComponent = <Communication />;
-      break;
     case 'uplode':
       contentComponent = <Uplode/>;
       break;
