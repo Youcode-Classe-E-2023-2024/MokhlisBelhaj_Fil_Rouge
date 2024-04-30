@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Profile from '../components/profile';
 import Subscribe from '../components/Subscribe';
-import Communication from '../components/Communication';
 import SideNav from '../components/SideNav';
 import Uplode from '../components/uplode';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../auth/user-context';
 
 const MyProfile = () => {
   const [selectedComponent, setSelectedComponent] = useState('profile');
+  const [currentUser, setCurrentUser] = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+    useEffect(() => {
+     
+      if (currentUser === null) {
+        navigate('/');  
+      }
+    }, [currentUser, navigate]);
 
   const handleComponentChange = (component) => {
     setSelectedComponent(component);

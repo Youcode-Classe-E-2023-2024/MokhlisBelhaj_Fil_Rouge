@@ -1,12 +1,16 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
 import Follower from './Follower';
 import Following from './Following';
-function Subscribe() { 
+import UserContext from '../auth/user-context';
+function Subscribe() {
+  const [currentUser, setCurrentUser] = useContext(UserContext);
     
   return (
     <div className=''>
-      <Follower/>
+      {currentUser.role=='acteur'&&(
+        <Follower/>
+      )}
       <Following/>
       </div>
   );

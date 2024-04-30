@@ -136,9 +136,11 @@ function ArtistsDetail() {
                             </div>
                         </div>
                     </div>
-                    <div className='max-w-7xl mx-auto px-4 sm:p-6 lg:p-10 rounded-xl mt-6'>
+                    {currentUser? <div className='max-w-7xl mx-auto px-4 sm:p-6 lg:p-10 rounded-xl mt-6'>
                         <Comments id={article.id}  />
-                    </div>
+                    </div>:<></> 
+                    }
+                   
                 </div>
             </div>
         </div>

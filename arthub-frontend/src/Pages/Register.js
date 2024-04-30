@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useApiAxios from '../config/axios';
+import UserContext from '../auth/user-context';
 
 const Register = () => {
+  const [currentUser, setCurrentUser] = useContext(UserContext);
+
   const navigate = useNavigate();
+  useEffect(() => {
+     
+    if (currentUser === null) {
+      navigate('/');  
+    }
+  }, [currentUser, navigate]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',

@@ -1,4 +1,4 @@
-import React, { Profiler, useState } from 'react';
+import React, { Profiler, useContext, useEffect, useState } from 'react';
 import Sidebaredash from '../components/admin/sidebaredash';
 import Statistique from '../components/Statistique';
 import Users from '../components/users';
@@ -6,9 +6,21 @@ import Articledash from '../components/Articledash';
 import Role from '../components/admin/Role';
 import Permissions from '../components/admin/Permissions';
 import Categorie from '../components/admin/Categorie';
+import UserContext from '../auth/user-context';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
     const [selectedComponent, setSelectedComponent] = useState('profile');
+    const [currentUser, setCurrentUser] = useContext(UserContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+     
+      if (currentUser.role != 'admin') {
+        navigate('/');  
+      }
+    }, [currentUser, navigate]);
+
 
     const handleComponentChange = (component) => {
       setSelectedComponent(component);

@@ -50,7 +50,9 @@ const Profile = () => {
           </div>
           {currentUser ? (
             <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-              <Subscribe id={id} />
+              
+              {user?.roles.some((role) => role.name === 'acteur')&&(<Subscribe id={id} />)}
+              
              
             </div>
           ) : null}

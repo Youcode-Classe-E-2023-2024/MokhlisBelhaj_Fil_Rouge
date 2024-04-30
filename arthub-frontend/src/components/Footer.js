@@ -16,9 +16,9 @@ const Footer = ()=>{
     }
 return(
     <section className="bg-gray-200">
-        <div className="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
-            <nav className="flex flex-wrap justify-center -mx-5 -my-2">
-                <div className="px-5 py-2">
+        <div className="max-w-screen-xl h-48 px-4 py-12 mx-auto space-y-5 overflow-hidden sm:px-6 lg:px-8">
+            <nav className="flex flex-wrap justify-center ">
+                <div className="px-5">
                 <Link to="/" className="text-base leading-6 text-gray-500 hover:text-gray-900">
                         ArtHub
                    
@@ -26,12 +26,12 @@ return(
 
                     </Link>
                 </div>
-                <div className="px-5 py-2">
+                <div className="px-5">
                 <Link to="/artists" className="text-base leading-6 text-gray-500 hover:text-gray-900">
                         Artists
                    </Link>
                 </div>
-                <div className="px-5 py-2">
+                <div className="px-5">
                 <Link to="/articles"  className="text-base leading-6 text-gray-500 hover:text-gray-900">
                         Article
                    </Link>

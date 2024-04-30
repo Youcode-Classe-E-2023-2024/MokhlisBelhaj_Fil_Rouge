@@ -5,7 +5,7 @@ export const refreshUserQuery = async (setCurrentUser) => {
 
   try {
     const token = localStorage.getItem("token");
-    if (!!token) {
+    if (token) {
       const response = await useApiAxios.get("/refreshUser");
 
       const user = response.data?.user;
@@ -16,6 +16,8 @@ export const refreshUserQuery = async (setCurrentUser) => {
     }
   } catch (error) {
     console.error("refreshUser failed:", error);
+    localStorage.removeItem("token");
+
   }
 };
 

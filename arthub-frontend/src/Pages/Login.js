@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import useApiAxios from '../config/axios';
 import UserContext from '../auth/user-context';
 
@@ -15,6 +14,14 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const Navigate = useNavigate();
+
+
+    useEffect(() => {
+     
+      if (currentUser === null) {
+        Navigate('/');  
+      }
+    }, [currentUser, Navigate]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
