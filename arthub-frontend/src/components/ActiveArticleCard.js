@@ -19,14 +19,27 @@ const ActiveArticleCard = ({ activeArticle }) => {
     created_at,
   } = activeArticle;
 
+  
+  const hasMedia = media && media.length > 0;
+  const mediaType = hasMedia ? media[0].type : null;
+  const mediaUrl = hasMedia ? media[0].mediaUrl : null;
+
+
   return (
     <div className="bg-white shadow-lg rounded-lg p-6">
         <p className='text-2xl text-center font-bold p-3'>l'article le plus actif</p>
       <div className="flex items-center">
-        {media && media.length > 0 && (
+      {hasMedia && mediaType === 'image' && (
           <img
-            src={media[0].mediaUrl}
+            src={mediaUrl}
             alt="Article image"
+            className="w-32 h-32 rounded-lg object-cover mr-4"
+          />
+        )}
+        {hasMedia && mediaType === 'video' && (
+          <video
+            src={mediaUrl}
+            controls
             className="w-32 h-32 rounded-lg object-cover mr-4"
           />
         )}
